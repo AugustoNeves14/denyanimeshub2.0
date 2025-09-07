@@ -1,0 +1,223 @@
+// Deny Animes Hub - Advanced Mixins
+// Collection of powerful SCSS mixins for Akatsuki theme
+
+// Glassmorphism mixin
+@mixin glassmorphism($bg-opacity: 0.05, $border-opacity: 0.1, $blur: 10px) {
+  background: rgba(255, 255, 255, $bg-opacity);
+  border: 1px solid rgba(255, 255, 255, $border-opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  box-shadow: var(--glass-shadow);
+}
+
+// Gradient overlay mixin
+@mixin gradient-overlay($direction: to bottom, $opacity: 0.8) {
+  background: linear-gradient(
+    $direction,
+    rgba(0, 0, 0, $opacity) 0%,
+    rgba(230, 0, 35, $opacity * 0.3) 50%,
+    rgba(0, 0, 0, $opacity) 100%
+  );
+}
+
+// Hover glow effect
+@mixin hover-glow($color: var(--akatsuki-red), $intensity: 0.5) {
+  transition: all var(--transition-base);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba($color, $intensity);
+    filter: brightness(var(--hover-brightness));
+  }
+}
+
+// Text glow effect
+@mixin text-glow($color: var(--akatsuki-red), $intensity: 0.8) {
+  text-shadow: 0 0 10px rgba($color, $intensity);
+  
+  &:hover {
+    text-shadow: 0 0 20px rgba($color, $intensity * 1.5);
+  }
+}
+
+// Responsive font size
+@mixin responsive-font($min-size, $max-size, $min-width: 320px, $max-width: 1440px) {
+  font-size: #{$min-size}px;
+  
+  @media (min-width: #{$min-width}) {
+    font-size: calc(#{$min-size}px + (#{$max-size} - #{$min-size}) * ((100vw - #{$min-width}px) / (#{$max-width} - #{$min-width})));
+  }
+  
+  @media (min-width: #{$max-width}) {
+    font-size: #{$max-size}px;
+  }
+}
+
+// Centering mixin
+@mixin center($direction: both) {
+  position: absolute;
+  
+  @if $direction == both {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if $direction == horizontal {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $direction == vertical {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// Aspect ratio mixin
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+  
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Animation keyframes
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// Scrollbar styling
+@mixin custom-scrollbar($track-color: var(--akatsuki-dark-gray), $thumb-color: var(--akatsuki-red)) {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: var(--radius-sm);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: var(--radius-sm);
+    
+    &:hover {
+      background: lighten($thumb-color, 10%);
+    }
+  }
+}
+
+// Parallax effect mixin
+@mixin parallax($speed: 0.5) {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    transform: translateY(calc(var(--scroll-position) * #{$speed * -1}px));
+    z-index: -1;
+  }
+}
+
+// Button variants
+@mixin button-variant($bg-color, $text-color, $hover-color: darken($bg-color, 10%)) {
+  background: $bg-color;
+  color: $text-color;
+  border: 1px solid $bg-color;
+  transition: all var(--transition-base);
+  
+  &:hover {
+    background: $hover-color;
+    border-color: $hover-color;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($bg-color, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba($bg-color, 0.2);
+  }
+}
+
+// Loading animation
+@mixin loading-pulse($color: var(--akatsuki-red)) {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba($color, 0.4),
+      transparent
+    );
+    animation: loading 2s infinite;
+  }
+  
+  @keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+}
+
+// Focus styles
+@mixin focus-ring($color: var(--akatsuki-red)) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px $color;
+}
+
+// Responsive utilities
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+// Print styles
+@mixin print-hide {
+  @media print {
+    display: none !important;
+  }
+}
+
+// Dark mode support
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// Reduced motion support
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

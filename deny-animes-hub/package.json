@@ -1,0 +1,36 @@
+{
+  "name": "deny-animes-hub",
+  "version": "1.0.0",
+  "description": "A premium anime streaming platform with revolutionary UI/UX design",
+  "main": "server.js",
+  "scripts": {
+    "dev": "concurrently &quot;npm run sass:watch&quot; &quot;npm run server&quot;",
+    "server": "nodemon server.js",
+    "sass:watch": "sass --watch src/scss/main.scss:public/css/main.css --style=expanded",
+    "sass:build": "sass src/scss/main.scss:public/css/main.css --style=compressed",
+    "start": "node server.js",
+    "build": "npm run sass:build && npm run optimize"
+  },
+  "keywords": ["anime", "streaming", "premium", "ui", "ux", "responsive"],
+  "author": "Deny Neves",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "dotenv": "^16.3.1",
+    "@supabase/supabase-js": "^2.38.0",
+    "axios": "^1.5.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "helmet": "^7.0.0",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "sass": "^1.68.0",
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.1",
+    "browser-sync": "^2.29.3"
+  }
+}

@@ -1,0 +1,39 @@
+.
+├── README.md
+├── config
+│   └── database.sql
+├── middleware
+├── models
+├── package.json
+├── public
+│   ├── css
+│   ├── images
+│   ├── js
+│   └── videos
+├── routes
+│   └── animes.js
+├── server.js
+├── src
+│   ├── assets
+│   │   ├── fonts
+│   │   ├── images
+│   │   └── videos
+│   ├── js
+│   │   ├── components
+│   │   ├── main.js
+│   │   ├── services
+│   │   └── utils
+│   └── scss
+│       ├── base
+│       ├── components
+│       ├── layouts
+│       ├── main.scss
+│       ├── pages
+│       └── utilities
+└── views
+    ├── pages
+    │   ├── index.ejs
+    │   └── watch.ejs
+    └── partials
+
+28 directories, 9 files
